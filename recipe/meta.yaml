@@ -1,7 +1,6 @@
 {% set name = "Flask-Uploads" %}
 {% set version = "0.2.1" %}
 {% set compress_type = "tar.gz" %}
-{% set hash_type = "sha256" %}
 {% set hash_val = "53ecbd6033667d50ae02b63adebbaa33c7fc56c09e5293025810cf9d841ecb02" %}
 {% set build_num = "0" %}
 
@@ -11,8 +10,8 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.{{ compress_type }}
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
-  {{ hash_type }}: {{ hash_val }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
+  sha256: {{ hash_val }}
 
 build:
   noarch: python
@@ -21,15 +20,17 @@ build:
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
     - setuptools
 
   run:
-    - python
+    - python >={{ python_min }}
     - flask >=0.8.0
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - flask_uploads
 
